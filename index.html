@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>OLDRB - Old Roblox Revival</title>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Source Sans Pro', 'Arial', sans-serif;
+    }
+
+    body {
+        height: 100vh;
+        overflow: hidden;
+        background: linear-gradient(180deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    /* Звёзды на фоне */
+    .stars {
+        position: absolute;
+        inset: 0;
+        background-image: 
+            radial-gradient(2px 2px at 20px 30px, #fff, transparent),
+            radial-gradient(2px 2px at 40px 70px, #fff, transparent),
+            radial-gradient(1px 1px at 90px 40px, #fff, transparent),
+            radial-gradient(1px 1px at 130px 80px, #fff, transparent),
+            radial-gradient(2px 2px at 160px 120px, #fff, transparent),
+            radial-gradient(1px 1px at 200px 50px, #fff, transparent);
+        background-size: 250px 200px;
+        animation: twinkle 4s infinite alternate;
+        opacity: 0.6;
+    }
+
+    @keyframes twinkle {
+        from { opacity: 0.4; }
+        to { opacity: 0.8; }
+    }
+
+    /* Главное меню */
+    .menu-container {
+        position: relative;
+        z-index: 10;
+        width: 440px;
+        background: #232527;
+        border-radius: 6px;
+        box-shadow: 0 15px 50px rgba(0,0,0,0.7);
+        padding: 35px 40px 30px;
+        text-align: center;
+    }
+
+    /* Логотип OLDRB в стиле 2016 */
+    .logo {
+        font-size: 46px;
+        font-weight: 900;
+        color: #fff;
+        letter-spacing: 1px;
+        margin-bottom: 4px;
+        font-family: 'Arial Black', sans-serif;
+        text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+    }
+
+    .logo span {
+        color: #e2231a;
+    }
+
+    .subtitle {
+        font-size: 13px;
+        color: #888;
+        margin-bottom: 30px;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+    }
+
+    /* Кнопки меню в стиле 2016 */
+    .menu-btn {
+        display: block;
+        width: 100%;
+        padding: 13px;
+        margin-bottom: 10px;
+        font-size: 17px;
+        font-weight: 600;
+        color: #fff;
+        background: #393b3d;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background 0.15s;
+        letter-spacing: 0.5px;
+    }
+
+    .menu-btn:hover {
+        background: #4a4d4f;
+    }
+
+    .menu-btn:active {
+        background: #2e3032;
+    }
+
+    .menu-btn.play {
+        background: #00a2ff;
+        font-weight: 700;
+        font-size: 18px;
+        padding: 15px;
+    }
+
+    .menu-btn.play:hover {
+        background: #1cb0ff;
+    }
+
+    /* Футер */
+    .footer {
+        margin-top: 25px;
+        font-size: 11px;
+        color: #555;
+        line-height: 1.5;
+    }
+
+    /* Версия */
+    .version {
+        position: absolute;
+        bottom: 12px;
+        right: 16px;
+        font-size: 11px;
+        color: #555;
+        z-index: 10;
+    }
+
+    /* Модалка */
+    .modal {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0,0,0,0.75);
+        z-index: 100;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .modal.active { display: flex; }
+
+    .modal-content {
+        background: #232527;
+        border-radius: 6px;
+        padding: 30px;
+        width: 360px;
+        text-align: center;
+        box-shadow: 0 15px 50px rgba(0,0,0,0.7);
+    }
+
+    .modal-content h2 {
+        margin-bottom: 20px;
+        color: #fff;
+        font-size: 22px;
+        font-weight: 700;
+        letter-spacing: 1px;
+    }
+
+    .modal-content input {
+        width: 100%;
+        padding: 12px 14px;
+        margin-bottom: 10px;
+        background: #393b3d;
+        border: 1px solid #4a4d4f;
+        border-radius: 4px;
+        font-size: 14px;
+        color: #fff;
+        outline: none;
+        transition: border 0.15s;
+    }
+
+    .modal-content input:focus {
+        border-color: #00a2ff;
+    }
+
+    .modal-content input::placeholder {
+        color: #777;
+    }
+
+    .modal-content .close-btn {
+        background: transparent;
+        color: #888;
+        border: 1px solid #4a4d4f;
+        margin-top: 5px;
+    }
+
+    .modal-content .close-btn:hover {
+        background: #2e3032;
+        color: #fff;
+    }
+</style>
+</head>
+<body>
+
+    <!-- Звёзды -->
+    <div class="stars"></div>
+
+    <!-- Меню -->
+    <div class="menu-container">
+        <div class="logo">OLD<span>RB</span></div>
+        <div class="subtitle">Old Roblox Revival</div>
+
+        <button class="menu-btn play" onclick="playGame()">ИГРАТЬ</button>
+        <button class="menu-btn" onclick="openModal('login')">ВХОД</button>
+        <button class="menu-btn" onclick="openModal('register')">РЕГИСТРАЦИЯ</button>
+
+        <div class="footer">
+            © OLDRB 2026<br>
+            Не связан с Roblox Corporation
+        </div>
+    </div>
+
+    <div class="version">v0.1.0-alpha • 2026</div>
+
+    <!-- Модальное окно -->
+    <div class="modal" id="modal">
+        <div class="modal-content" id="modalContent"></div>
+    </div>
+
+<script>
+    const modal = document.getElementById('modal');
+    const modalContent = document.getElementById('modalContent');
+
+    function openModal(type) {
+        let html = '';
+
+        if (type === 'login') {
+            html = `
+                <h2>ВХОД</h2>
+                <input type="text" placeholder="Имя пользователя" id="loginUser">
+                <input type="password" placeholder="Пароль" id="loginPass">
+                <button class="menu-btn play" onclick="doLogin()">ВОЙТИ</button>
+                <button class="menu-btn close-btn" onclick="closeModal()">Отмена</button>
+            `;
+        } else if (type === 'register') {
+            html = `
+                <h2>РЕГИСТРАЦИЯ</h2>
+                <input type="text" placeholder="Имя пользователя" id="regUser">
+                <input type="password" placeholder="Пароль" id="regPass">
+                <input type="password" placeholder="Повтор пароля" id="regPass2">
+                <button class="menu-btn play" onclick="doRegister()">СОЗДАТЬ АККАУНТ</button>
+                <button class="menu-btn close-btn" onclick="closeModal()">Отмена</button>
+            `;
+        }
+
+        modalContent.innerHTML = html;
+        modal.classList.add('active');
+    }
+
+    function closeModal() {
+        modal.classList.remove('active');
+    }
+
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) closeModal();
+    });
+
+    function doLogin() {
+        const user = document.getElementById('loginUser').value;
+        const pass = document.getElementById('loginPass').value;
+        if (!user || !pass) {
+            alert('Заполни все поля!');
+            return;
+        }
+        alert('Добро пожаловать, ' + user + '! (демо)');
+        closeModal();
+    }
+
+    function doRegister() {
+        const user = document.getElementById('regUser').value;
+        const pass = document.getElementById('regPass').value;
+        const pass2 = document.getElementById('regPass2').value;
+        if (!user || !pass || !pass2) {
+            alert('Заполни все поля!');
+            return;
+        }
+        if (pass !== pass2) {
+            alert('Пароли не совпадают!');
+            return;
+        }
+        alert('ккаунт ' + user + ' создан! (демо)');
+        closeModal();
+    }
+
+    function playGame() {
+
+        alert('🎮 Запуск OLDRB... (тут будет твой клиент)');
+    }
+</script>
+
+</body>
+</html>
